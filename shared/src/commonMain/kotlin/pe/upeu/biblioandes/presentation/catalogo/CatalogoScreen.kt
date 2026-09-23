@@ -130,6 +130,7 @@ fun CatalogoScreen(
                         LibroItem(
                             titulo = libro.titulo,
                             autor = libro.autor,
+                            editorial = libro.editorial,
                             ejemplares = libro.ejemplaresDisponibles,
                             disponible = ReglasPrestamo.tieneEjemplares(libro),
                             onClick = { onAbrirLibro(libro.id) }

@@ -13,7 +13,7 @@ import kotlin.test.assertEquals
 class ReglasPrestamoTest {
 
     private val hoy = LocalDate(2026, 9, 23)
-    private val libro = Libro(1, "Cálculo aplicado", "L. Ortega", 2019, "Matemática", "Sede Norte", 2)
+    private val libro = Libro(1, "Cálculo aplicado", "L. Ortega", 2019, "Matemática", "Sede Norte", 2, "McGraw-Hill")
     private val agotado = libro.copy(id = 2, ejemplaresDisponibles = 0)
 
     private fun prestamo(limite: String, estado: EstadoPrestamo = EstadoPrestamo.Activo(0)) =
