@@ -62,7 +62,8 @@ val presentationModule = module {
         DetalleLibroViewModel(
             libroId = parametros.get(),
             obtenerLibro = get(),
-            solicitarPrestamo = get()
+            solicitarPrestamo = get(),
+            obtenerCupo = get()
         )
     }
 }

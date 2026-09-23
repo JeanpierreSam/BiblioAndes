@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import pe.upeu.biblioandes.domain.usecase.ObtenerCupoPrestamosUseCase
 import pe.upeu.biblioandes.domain.usecase.ObtenerLibroUseCase
 import pe.upeu.biblioandes.domain.usecase.SolicitarPrestamoUseCase
 
@@ -17,7 +18,8 @@ import pe.upeu.biblioandes.domain.usecase.SolicitarPrestamoUseCase
 class DetalleLibroViewModel(
     private val libroId: Int,
     private val obtenerLibro: ObtenerLibroUseCase,
-    private val solicitarPrestamo: SolicitarPrestamoUseCase
+    private val solicitarPrestamo: SolicitarPrestamoUseCase,
+    private val obtenerCupo: ObtenerCupoPrestamosUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DetalleLibroUiState())
@@ -25,6 +27,14 @@ class DetalleLibroViewModel(
 
     init {
         cargar()
+        actualizarCupo()
+    }
+
+    /** RN-01: si ya hay 3 préstamos activos, el botón de solicitar se deshabilita. */
+    private fun actualizarCupo() {
+        viewModelScope.launch {
+            obtenerCupo().onSuccess { cupo -> _uiState.update { it.copy(limiteAlcanzado = cupo.limiteAlcanzado) } }
+        }
     }
 
     fun cargar(mostrarCarga: Boolean = true) {
@@ -55,6 +65,7 @@ class DetalleLibroViewModel(
                         )
                     }
                     cargar(mostrarCarga = false) // actualiza los ejemplares disponibles
+                    actualizarCupo()
                 }
                 .onFailure { error ->
                     _uiState.update {
