@@ -13,6 +13,7 @@ import pe.upeu.biblioandes.domain.repository.BibliotecaRepository
 import pe.upeu.biblioandes.domain.usecase.DevolverPrestamoUseCase
 import pe.upeu.biblioandes.domain.usecase.FiltrarCatalogoUseCase
 import pe.upeu.biblioandes.domain.usecase.ObtenerCatalogoUseCase
+import pe.upeu.biblioandes.domain.usecase.ObtenerCupoPrestamosUseCase
 import pe.upeu.biblioandes.domain.usecase.ObtenerEstudianteUseCase
 import pe.upeu.biblioandes.domain.usecase.ObtenerLibroUseCase
 import pe.upeu.biblioandes.domain.usecase.ObtenerPrestamosUseCase
@@ -22,6 +23,7 @@ import pe.upeu.biblioandes.domain.usecase.SolicitarPrestamoUseCase
 import pe.upeu.biblioandes.presentation.catalogo.CatalogoViewModel
 import pe.upeu.biblioandes.presentation.detalle.DetalleLibroViewModel
 import pe.upeu.biblioandes.presentation.inicio.InicioViewModel
+import pe.upeu.biblioandes.presentation.navigation.BarraInferiorViewModel
 import pe.upeu.biblioandes.presentation.perfil.PerfilViewModel
 import pe.upeu.biblioandes.presentation.prestamos.PrestamosViewModel
 
@@ -46,6 +48,7 @@ val domainModule = module {
     factoryOf(::DevolverPrestamoUseCase)
     factoryOf(::ObtenerEstudianteUseCase)
     factoryOf(::ObtenerResumenInicioUseCase)
+    factoryOf(::ObtenerCupoPrestamosUseCase)
 }
 
 val presentationModule = module {
@@ -53,12 +56,14 @@ val presentationModule = module {
     viewModelOf(::CatalogoViewModel)
     viewModelOf(::PrestamosViewModel)
     viewModelOf(::PerfilViewModel)
+    viewModelOf(::BarraInferiorViewModel)
     // El id del libro llega como parámetro desde la ruta de navegación.
     viewModel { parametros ->
         DetalleLibroViewModel(
             libroId = parametros.get(),
             obtenerLibro = get(),
-            solicitarPrestamo = get()
+            solicitarPrestamo = get(),
+            obtenerCupo = get()
         )
     }
 }
