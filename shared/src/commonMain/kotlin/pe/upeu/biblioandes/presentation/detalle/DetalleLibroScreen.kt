@@ -134,6 +134,7 @@ private fun ContenidoDetalle(
     ) {
         Text(libro.titulo, style = MaterialTheme.typography.headlineSmall)
         Text(libro.autor, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text("Editorial ${libro.editorial}", style = MaterialTheme.typography.bodyMedium)
         OutlinedCard(modifier = Modifier.fillMaxWidth()) {
             Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                 FilaDato(Icons.Default.CalendarMonth, "Año", libro.anio.toString())
