@@ -13,6 +13,7 @@ import pe.upeu.biblioandes.domain.repository.BibliotecaRepository
 import pe.upeu.biblioandes.domain.usecase.DevolverPrestamoUseCase
 import pe.upeu.biblioandes.domain.usecase.FiltrarCatalogoUseCase
 import pe.upeu.biblioandes.domain.usecase.ObtenerCatalogoUseCase
+import pe.upeu.biblioandes.domain.usecase.ObtenerCupoPrestamosUseCase
 import pe.upeu.biblioandes.domain.usecase.ObtenerEstudianteUseCase
 import pe.upeu.biblioandes.domain.usecase.ObtenerLibroUseCase
 import pe.upeu.biblioandes.domain.usecase.ObtenerPrestamosUseCase
@@ -46,6 +47,7 @@ val domainModule = module {
     factoryOf(::DevolverPrestamoUseCase)
     factoryOf(::ObtenerEstudianteUseCase)
     factoryOf(::ObtenerResumenInicioUseCase)
+    factoryOf(::ObtenerCupoPrestamosUseCase)
 }
 
 val presentationModule = module {
