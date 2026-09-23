@@ -8,10 +8,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CloudOff
 import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -42,6 +45,7 @@ fun CatalogoRoute(
         uiState = uiState,
         onConsultaChange = viewModel::onConsultaChange,
         onCategoriaSeleccionada = viewModel::onCategoriaSeleccionada,
+        onSoloDisponiblesChange = viewModel::onSoloDisponiblesChange,
         onReintentar = viewModel::cargar,
         onAbrirLibro = onAbrirLibro
     )
@@ -53,6 +57,7 @@ fun CatalogoScreen(
     uiState: CatalogoUiState,
     onConsultaChange: (String) -> Unit,
     onCategoriaSeleccionada: (String?) -> Unit,
+    onSoloDisponiblesChange: (Boolean) -> Unit,
     onReintentar: () -> Unit,
     onAbrirLibro: (Int) -> Unit
 ) {
@@ -62,6 +67,17 @@ fun CatalogoScreen(
                 valor = uiState.consulta,
                 onValorChange = onConsultaChange,
                 modifier = Modifier.padding(horizontal = 16.dp)
+            )
+            FilterChip(
+                selected = uiState.soloDisponibles,
+                onClick = { onSoloDisponiblesChange(!uiState.soloDisponibles) },
+                label = { Text("Solo disponibles") },
+                leadingIcon = if (uiState.soloDisponibles) {
+                    { Icon(Icons.Default.Check, contentDescription = null) }
+                } else {
+                    null
+                },
+                modifier = Modifier.padding(start = 16.dp, top = 8.dp)
             )
             FilaDeChips(
                 opciones = listOf<String?>(null) + uiState.categorias,
