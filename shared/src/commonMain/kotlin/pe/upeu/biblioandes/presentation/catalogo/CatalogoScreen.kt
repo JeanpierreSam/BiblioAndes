@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,6 +15,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -23,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
+import pe.upeu.biblioandes.domain.model.CriterioOrden
 import pe.upeu.biblioandes.domain.model.ReglasPrestamo
 import pe.upeu.biblioandes.presentation.components.CampoBusqueda
 import pe.upeu.biblioandes.presentation.components.EstadoCarga
@@ -42,6 +47,7 @@ fun CatalogoRoute(
         uiState = uiState,
         onConsultaChange = viewModel::onConsultaChange,
         onCategoriaSeleccionada = viewModel::onCategoriaSeleccionada,
+        onOrdenChange = viewModel::onOrdenChange,
         onReintentar = viewModel::cargar,
         onAbrirLibro = onAbrirLibro
     )
@@ -53,6 +59,7 @@ fun CatalogoScreen(
     uiState: CatalogoUiState,
     onConsultaChange: (String) -> Unit,
     onCategoriaSeleccionada: (String?) -> Unit,
+    onOrdenChange: (CriterioOrden) -> Unit,
     onReintentar: () -> Unit,
     onAbrirLibro: (Int) -> Unit
 ) {
@@ -70,6 +77,17 @@ fun CatalogoScreen(
                 onSeleccionar = onCategoriaSeleccionada,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
+            SingleChoiceSegmentedButtonRow(modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth()) {
+                CriterioOrden.entries.forEachIndexed { indice, criterio ->
+                    SegmentedButton(
+                        selected = uiState.orden == criterio,
+                        onClick = { onOrdenChange(criterio) },
+                        shape = SegmentedButtonDefaults.itemShape(indice, CriterioOrden.entries.size)
+                    ) {
+                        Text(if (criterio == CriterioOrden.TITULO) "Título" else "Año")
+                    }
+                }
+            }
             when (val fase = uiState.fase) {
                 FaseCatalogo.Cargando -> EstadoCarga("Cargando catálogo…")
 
