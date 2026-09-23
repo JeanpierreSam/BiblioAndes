@@ -1,5 +1,6 @@
 package pe.upeu.biblioandes.presentation.catalogo
 
+import pe.upeu.biblioandes.domain.model.CriterioOrden
 import pe.upeu.biblioandes.domain.model.Libro
 
 /** Estado completo del catálogo: filtros elegidos + fase de la lista. */
@@ -9,6 +10,7 @@ data class CatalogoUiState(
     val categoriaSeleccionada: String? = null,
     val consulta: String = "",
     val soloDisponibles: Boolean = false,
+    val orden: CriterioOrden = CriterioOrden.TITULO,
     val fase: FaseCatalogo = FaseCatalogo.Cargando
 )
 
