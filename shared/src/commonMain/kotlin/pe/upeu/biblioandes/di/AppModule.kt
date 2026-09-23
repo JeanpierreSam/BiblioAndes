@@ -23,6 +23,7 @@ import pe.upeu.biblioandes.domain.usecase.SolicitarPrestamoUseCase
 import pe.upeu.biblioandes.presentation.catalogo.CatalogoViewModel
 import pe.upeu.biblioandes.presentation.detalle.DetalleLibroViewModel
 import pe.upeu.biblioandes.presentation.inicio.InicioViewModel
+import pe.upeu.biblioandes.presentation.navigation.BarraInferiorViewModel
 import pe.upeu.biblioandes.presentation.perfil.PerfilViewModel
 import pe.upeu.biblioandes.presentation.prestamos.PrestamosViewModel
 
@@ -55,6 +56,7 @@ val presentationModule = module {
     viewModelOf(::CatalogoViewModel)
     viewModelOf(::PrestamosViewModel)
     viewModelOf(::PerfilViewModel)
+    viewModelOf(::BarraInferiorViewModel)
     // El id del libro llega como parámetro desde la ruta de navegación.
     viewModel { parametros ->
         DetalleLibroViewModel(

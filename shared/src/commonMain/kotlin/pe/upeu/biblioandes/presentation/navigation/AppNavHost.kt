@@ -3,14 +3,18 @@ package pe.upeu.biblioandes.presentation.navigation
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -20,6 +24,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.savedstate.read
+import org.koin.compose.viewmodel.koinViewModel
 import pe.upeu.biblioandes.presentation.catalogo.CatalogoRoute
 import pe.upeu.biblioandes.presentation.detalle.DetalleLibroRoute
 import pe.upeu.biblioandes.presentation.inicio.InicioRoute
@@ -41,12 +46,22 @@ fun AppNavHost(
     val rutaActual = entradaActual?.destination?.route
     val mostrarBarra = DestinoInferior.entries.any { it.ruta == rutaActual }
 
+    val barraViewModel: BarraInferiorViewModel = koinViewModel()
+    val activos by barraViewModel.activos.collectAsStateWithLifecycle()
+    // Se refresca cada vez que cambia la pantalla activa: un préstamo nuevo o
+    // devuelto en Detalle/Préstamos debe reflejarse de inmediato en el badge.
+    LaunchedEffect(rutaActual) { barraViewModel.actualizar() }
+
     Scaffold(
         // Cada pantalla tiene su propio Scaffold con TopAppBar y maneja sus márgenes.
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = {
             if (mostrarBarra) {
-                BarraInferior(rutaActual = rutaActual, onSeleccionar = { navController.navegarAPestana(it.ruta) })
+                BarraInferior(
+                    rutaActual = rutaActual,
+                    activos = activos,
+                    onSeleccionar = { navController.navegarAPestana(it.ruta) }
+                )
             }
         }
     ) { padding ->
@@ -88,13 +103,21 @@ fun AppNavHost(
 }
 
 @Composable
-private fun BarraInferior(rutaActual: String?, onSeleccionar: (DestinoInferior) -> Unit) {
+private fun BarraInferior(rutaActual: String?, activos: Int, onSeleccionar: (DestinoInferior) -> Unit) {
     NavigationBar {
         DestinoInferior.entries.forEach { destino ->
             NavigationBarItem(
                 selected = destino.ruta == rutaActual,
                 onClick = { onSeleccionar(destino) },
-                icon = { Icon(destino.icono, contentDescription = null) },
+                icon = {
+                    if (destino == DestinoInferior.PRESTAMOS && activos > 0) {
+                        BadgedBox(badge = { Badge { Text("$activos") } }) {
+                            Icon(destino.icono, contentDescription = null)
+                        }
+                    } else {
+                        Icon(destino.icono, contentDescription = null)
+                    }
+                },
                 label = { Text(destino.etiqueta) }
             )
         }
