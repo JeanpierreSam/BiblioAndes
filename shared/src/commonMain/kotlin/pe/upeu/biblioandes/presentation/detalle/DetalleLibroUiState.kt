@@ -6,6 +6,7 @@ data class DetalleLibroUiState(
     val fase: FaseDetalle = FaseDetalle.Cargando,
     val mostrarConfirmacion: Boolean = false,
     val solicitando: Boolean = false,
+    val limiteAlcanzado: Boolean = false,
     /** Resultado de la solicitud para el Snackbar; null cuando ya se mostró. */
     val mensaje: String? = null
 )

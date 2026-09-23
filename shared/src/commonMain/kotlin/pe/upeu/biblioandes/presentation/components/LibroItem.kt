@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 fun LibroItem(
     titulo: String,
     autor: String,
+    editorial: String,
     ejemplares: Int,
     disponible: Boolean,
     onClick: () -> Unit,
@@ -44,6 +45,7 @@ fun LibroItem(
             Column(modifier = Modifier.weight(1f)) {
                 Text(titulo, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
                 Text(autor, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(editorial, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             Spacer(Modifier.width(8.dp))
             EtiquetaDisponibilidad(ejemplares = ejemplares, disponible = disponible)

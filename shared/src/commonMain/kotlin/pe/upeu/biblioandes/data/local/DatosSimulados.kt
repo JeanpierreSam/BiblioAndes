@@ -27,18 +27,18 @@ object DatosSimulados {
     val categorias = listOf("Programación", "Matemática", "Redes", "Gestión", "Literatura")
 
     val libros = listOf(
-        Libro(1, "Kotlin en profundidad", "M. Salazar", 2023, "Programación", "Central", 3),
-        Libro(2, "Estructuras de datos", "R. Peña", 2021, "Programación", "Central", 0),
-        Libro(3, "Cálculo aplicado", "L. Ortega", 2019, "Matemática", "Sede Norte", 2),
-        Libro(4, "Redes de computadoras", "A. Medina", 2022, "Redes", "Sede Sur", 4),
-        Libro(5, "Seguridad en redes", "P. Ríos", 2024, "Redes", "Central", 0),
-        Libro(6, "Gestión de proyectos", "S. Delgado", 2021, "Gestión", "Sede Norte", 2),
-        Libro(7, "Patrones de diseño en Kotlin", "E. Rojas", 2024, "Programación", "Sede Norte", 1),
-        Libro(8, "Álgebra lineal", "C. Vargas", 2020, "Matemática", "Central", 3),
-        Libro(9, "Enrutamiento y conmutación", "J. Torres", 2023, "Redes", "Sede Norte", 1),
-        Libro(10, "Liderazgo y gestión ágil", "V. Paredes", 2023, "Gestión", "Central", 2),
-        Libro(11, "Los ríos profundos", "José María Arguedas", 1958, "Literatura", "Central", 2),
-        Libro(12, "Cien años de soledad", "Gabriel García Márquez", 1967, "Literatura", "Sede Sur", 0)
+        Libro(1, "Kotlin en profundidad", "M. Salazar", 2023, "Programación", "Central", 3, "Alfaomega"),
+        Libro(2, "Estructuras de datos", "R. Peña", 2021, "Programación", "Central", 0, "Pearson"),
+        Libro(3, "Cálculo aplicado", "L. Ortega", 2019, "Matemática", "Sede Norte", 2, "McGraw-Hill"),
+        Libro(4, "Redes de computadoras", "A. Medina", 2022, "Redes", "Sede Sur", 4, "Pearson"),
+        Libro(5, "Seguridad en redes", "P. Ríos", 2024, "Redes", "Central", 0, "Alfaomega"),
+        Libro(6, "Gestión de proyectos", "S. Delgado", 2021, "Gestión", "Sede Norte", 2, "Pearson"),
+        Libro(7, "Patrones de diseño en Kotlin", "E. Rojas", 2024, "Programación", "Sede Norte", 1, "Alfaomega"),
+        Libro(8, "Álgebra lineal", "C. Vargas", 2020, "Matemática", "Central", 3, "Reverté"),
+        Libro(9, "Enrutamiento y conmutación", "J. Torres", 2023, "Redes", "Sede Norte", 1, "Pearson"),
+        Libro(10, "Liderazgo y gestión ágil", "V. Paredes", 2023, "Gestión", "Central", 2, "Fondo Editorial UPeU"),
+        Libro(11, "Los ríos profundos", "José María Arguedas", 1958, "Literatura", "Central", 2, "Peisa"),
+        Libro(12, "Cien años de soledad", "Gabriel García Márquez", 1967, "Literatura", "Sede Sur", 0, "Sudamericana")
     )
 
     val prestamos = listOf(

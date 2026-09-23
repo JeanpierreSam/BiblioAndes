@@ -40,6 +40,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import pe.upeu.biblioandes.domain.model.Libro
 import pe.upeu.biblioandes.domain.model.ReglasPrestamo
+import pe.upeu.biblioandes.domain.model.ValidacionSolicitud
 import pe.upeu.biblioandes.presentation.components.EstadoCarga
 import pe.upeu.biblioandes.presentation.components.EstadoVacioCentrado
 import pe.upeu.biblioandes.presentation.components.FilaDato
@@ -107,6 +108,7 @@ fun DetalleLibroScreen(
                 ContenidoDetalle(
                     libro = fase.libro,
                     solicitando = uiState.solicitando,
+                    limiteAlcanzado = uiState.limiteAlcanzado,
                     onSolicitarClick = onSolicitarClick,
                     modifier = contenido
                 )
@@ -122,6 +124,7 @@ fun DetalleLibroScreen(
 private fun ContenidoDetalle(
     libro: Libro,
     solicitando: Boolean,
+    limiteAlcanzado: Boolean,
     onSolicitarClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -134,6 +137,7 @@ private fun ContenidoDetalle(
     ) {
         Text(libro.titulo, style = MaterialTheme.typography.headlineSmall)
         Text(libro.autor, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text("Editorial ${libro.editorial}", style = MaterialTheme.typography.bodyMedium)
         OutlinedCard(modifier = Modifier.fillMaxWidth()) {
             Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                 FilaDato(Icons.Default.CalendarMonth, "Año", libro.anio.toString())
@@ -142,12 +146,23 @@ private fun ContenidoDetalle(
                 FilaDato(Icons.Default.Inventory2, "Ejemplares disponibles", libro.ejemplaresDisponibles.toString())
             }
         }
-        Button(onClick = onSolicitarClick, enabled = !solicitando, modifier = Modifier.fillMaxWidth()) {
+        Button(
+            onClick = onSolicitarClick,
+            enabled = !solicitando && !limiteAlcanzado,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             if (solicitando) {
                 CircularProgressIndicator(strokeWidth = 2.dp, modifier = Modifier.size(20.dp))
             } else {
                 Text("Solicitar préstamo")
             }
+        }
+        if (limiteAlcanzado) {
+            Text(
+                ValidacionSolicitud.LimiteAlcanzado.mensaje,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
         }
     }
 }
