@@ -8,6 +8,7 @@ data class CatalogoUiState(
     /** null = "Todas". */
     val categoriaSeleccionada: String? = null,
     val consulta: String = "",
+    val soloDisponibles: Boolean = false,
     val fase: FaseCatalogo = FaseCatalogo.Cargando
 )
 

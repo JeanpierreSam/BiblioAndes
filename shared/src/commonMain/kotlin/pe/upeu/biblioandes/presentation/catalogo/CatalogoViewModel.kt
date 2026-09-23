@@ -52,12 +52,19 @@ class CatalogoViewModel(
         aplicarFiltros()
     }
 
+    fun onSoloDisponiblesChange(activo: Boolean) {
+        _uiState.update { it.copy(soloDisponibles = activo) }
+        aplicarFiltros()
+    }
+
     /** Recalcula la lista visible; no hace nada mientras carga o si hubo error. */
     private fun aplicarFiltros() {
         val estado = _uiState.value
         if (estado.fase is FaseCatalogo.Cargando && todosLosLibros.isEmpty()) return
         if (estado.fase is FaseCatalogo.Error) return
-        val visibles = filtrarCatalogo(todosLosLibros, estado.categoriaSeleccionada, estado.consulta)
+        val visibles = filtrarCatalogo(
+            todosLosLibros, estado.categoriaSeleccionada, estado.consulta, estado.soloDisponibles
+        )
         _uiState.update {
             it.copy(fase = if (visibles.isEmpty()) FaseCatalogo.Vacio else FaseCatalogo.Contenido(visibles))
         }

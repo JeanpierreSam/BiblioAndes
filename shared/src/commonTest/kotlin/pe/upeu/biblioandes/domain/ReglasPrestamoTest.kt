@@ -71,4 +71,12 @@ class ReglasPrestamoTest {
         assertEquals(1, filtrar(libros, categoria = null, consulta = "garcia").size)
         assertEquals(2, filtrar(libros, categoria = "Matemática", consulta = "").size)
     }
+
+    @Test
+    fun scA_soloDisponiblesExcluyeLosLibrosAgotados() {
+        val libros = listOf(libro, agotado.copy(categoria = libro.categoria))
+        val filtrar = FiltrarCatalogoUseCase()
+        val visibles = filtrar(libros, categoria = libro.categoria, consulta = "", soloDisponibles = true)
+        assertEquals(listOf(libro), visibles)
+    }
 }
