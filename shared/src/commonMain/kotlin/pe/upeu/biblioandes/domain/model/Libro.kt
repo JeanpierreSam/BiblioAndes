@@ -7,5 +7,6 @@ data class Libro(
     val anio: Int,
     val categoria: String,
     val sede: String,
-    val ejemplaresDisponibles: Int
+    val ejemplaresDisponibles: Int,
+    val editorial: String
 )
