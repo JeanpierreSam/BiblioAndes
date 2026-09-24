@@ -4,7 +4,7 @@ Aplicación Kotlin Multiplatform (Android + iOS) para consultar el catálogo de 
 biblioteca, solicitar préstamos y controlar las fechas de devolución.
 Examen Parcial U1 — Desarrollo de Aplicaciones Móviles — UPeU 2026-2.
 
-**Integrantes:** Jeanpierre Miranda · <Compañero>
+**Integrante:** Jeanpierre Miranda
 
 ## Tecnologías
 Kotlin 2.4 · Compose Multiplatform 1.11 · Material 3 · Navigation Compose ·
